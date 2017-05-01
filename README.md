@@ -11,6 +11,8 @@ In this tutorial we will install latest Wordpress with server spec:
 Requirement:
   - Fresh droplet (Ubuntu 16.04.2 x64)
 
+<b>If you dont know what are you gonna do, simply drop an email to rivieravinesa@gmail.com,
+you can hire me to setup your server with varnish cache.</b>
 
 ### STEP 1
 
