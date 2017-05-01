@@ -171,7 +171,7 @@ mysql -u root -p'mysql_root_password' -e "CREATE USER wpuser@localhost IDENTIFIE
 
 add user to database
 ```sh
-mysql -u root -p'mysql_root_password' -e "GRANT ALL PRIVILEGES ON wordpress.* TO wpuser@localhost;"
+mysql -u root -p'mysql_root_password' -e "GRANT ALL PRIVILEGES ON wordpress_db.* TO wpuser@localhost;"
 ```
 
 flush previleges
