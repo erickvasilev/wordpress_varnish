@@ -63,11 +63,23 @@ sub vcl_recv {
                 return (pass);
         }
 
-    
-    # Did not cache the admin and login pages
-    if (req.url ~ "/wp-(login|admin)") {
-        return (pass);
-    }
+    #bypass some url and wordpress backend
+	
+        if (req.url ~ "\?(utm_(campaign|medium|source|term)|adParams|client|cx|eid|fbid|feed|ref(id|src)?|v(er|iew))=") {
+         set req.url = regsub(req.url, "\?.*$", "");
+        }
+     
+		if (req.url ~ "wp-(login|admin)" || req.url ~ "preview=true" || req.url ~ "xmlrpc.php") {
+         return (pass);
+		}
+		
+		if (req.http.cookie) {
+         if (req.http.cookie ~ "(wordpress_|wp-settings-)") {
+            return(pass);
+         } else {
+            unset req.http.cookie;
+         }
+		}
     
      # Do not cache the WooCommerce pages
      ### REMOVE IT IF YOU DO NOT USE WOOCOMMERCE ###
@@ -175,9 +187,11 @@ sub vcl_backend_response {
     }
 
     # Only allow cookies to be set if we're in admin area
-    if (beresp.http.Set-Cookie && bereq.url !~ "^/wp-(login|admin)") {
-            unset beresp.http.Set-Cookie;
-        }
+    		
+	if ( (!(bereq.url ~ "(wp-(login|admin)|login)")) ) {
+      unset beresp.http.set-cookie;
+      set beresp.ttl = 1h;
+    }	
 
     # don't cache response to posted requests or those with basic auth
     if ( bereq.method == "POST" || bereq.http.Authorization ) {
