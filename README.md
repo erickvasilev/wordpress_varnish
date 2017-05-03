@@ -23,7 +23,7 @@ sudo apt-get update
 ```
 
 ```sh
-sudo apt-get install -y nginx mysql-server php php-fpm php-mysql varnish
+sudo apt-get install -y nginx mysql-server php php-fpm php-mysql php-curl php7.0-xml varnish
 ```
 
 when it ask for the mysql root password, you can type new password.
